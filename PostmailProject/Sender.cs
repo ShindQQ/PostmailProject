@@ -13,8 +13,24 @@ namespace PostmailProject
 
         public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, double weight, double capacity) : base(name, surname, patronymic, postoffice_number,phone_number)
         {
-            Weight = weight;
-            Capacity = capacity;
+            if (weight <= 0)
+            {
+                throw new DoubleException("Weight is less or equal to zero!", weight);
+            }
+            else
+            {
+                Weight = weight;
+            }
+
+            if (capacity <= 0)
+            {
+                throw new DoubleException("Capacity is less or equal to zero!", capacity);
+            }
+            else
+            {
+                Capacity = capacity;
+            }
+            
         }
 
         public object Clone()

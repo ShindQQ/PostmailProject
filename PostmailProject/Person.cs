@@ -12,7 +12,7 @@ namespace PostmailProject
         public string Name { get; }
         public string Surname { get; }
         public string Patronymic { get; }
-        public int Postoffice_number { get;  }
+        public int Postoffice_number { get; }
         public string Phone_number { get; }
 
         private string pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
@@ -57,7 +57,8 @@ namespace PostmailProject
 
         public int CompareTo(object obj)
         {
-            return Postoffice_number.CompareTo((Sender)obj);
+            return Postoffice_number.CompareTo((Person)obj);
         }
+
     }
 }

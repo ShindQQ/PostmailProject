@@ -6,20 +6,24 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    internal class Postmail : ICloneable
+    internal class Postmail<T> : ICloneable
     {
         public string Name { get; }
         public int Postoffices_ammount { get; set; }
 
-        public Postmail(string name)
+        public (T, T, T) Location { get; set; }
+
+        public Postmail(string name, (T, T, T) location)
         {
             Name = name;
+            Location = location;
+
             Postoffices_ammount = default;
         }
 
         public virtual object Clone()
         {
-            return MemberwiseClone() as Postmail;
+            return MemberwiseClone() as Postmail<T>;
         }
     }
 }

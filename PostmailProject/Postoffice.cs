@@ -6,19 +6,27 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    internal class Postoffice : Postmail, ICloneable
+    internal class Postoffice<T> : Postmail<T>, ICloneable
     {
         public int Postoffice_number { get; }
 
-        public Postoffice(string name, int postoffice_number) : base(name)
+        public Postoffice(string name, int postoffice_number, (T, T, T) location) : base(name, location)
         {
-            Postoffice_number = postoffice_number;
+            if (postoffice_number <= 0)
+            {
+                throw new IntException("Postoffice number is less or equal to zero!", postoffice_number);
+            }
+            else
+            {
+                Postoffice_number = postoffice_number;
+            }
+
             base.Postoffices_ammount++;
         }
 
         public override object Clone()
         {
-            return MemberwiseClone() as Postoffice;
+            return MemberwiseClone() as Postoffice<T>;
         }
     }
 }
