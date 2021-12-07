@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace PostmailProject
 {
     internal class Postoffice<T> : Postmail<T>, ICloneable
+        where T : notnull
     {
         public int Postoffice_number { get; }
 
