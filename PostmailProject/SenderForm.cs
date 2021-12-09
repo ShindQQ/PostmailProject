@@ -12,9 +12,176 @@ namespace PostmailProject
 {
     public partial class SenderForm : Form
     {
+        int postoffice_number = default;
+        double capacity = default;
+        double weight = default;
+
+        List<Sender<dynamic>> senders = new List<Sender<dynamic>>();
+        
         public SenderForm()
         {
             InitializeComponent();
         }
+
+        private void CreateDepartmentTab_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SendParcelBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SenderBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NameBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NameTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SurnameBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SurnameTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PatronymicBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PatronymicTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PostOfficeNumberBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PostOfficeNumberTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!int.TryParse(PostOfficeNumberTextBox.Text, out postoffice_number))
+            {
+                MessageBox.Show("Wrong data for postoffice number!");
+            }
+        }
+
+        private void PhoneNumberBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PhoneNumberTextBox_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
+
+        private void ParcelBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ParcelNameBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ParcelNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ParcelCapacityBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ParcelCapacityTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!double.TryParse(ParcelCapacityTextBox.Text, out capacity))
+            {
+                MessageBox.Show("Wrong capacity for parcel!");
+            }
+        }
+
+        private void ParcelWeightBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ParcelWeightTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!double.TryParse(ParcelWeightTextBox.Text, out weight))
+            {
+                MessageBox.Show("Wrong weight for parcel!");
+            }
+        }
+
+        private void CreateDepartureBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ShowDepartmentLabel_Click(object sender, EventArgs e)
+        {
+            ShowDepartmentLabel.Text = "";
+
+            foreach (var item in senders)
+            {
+                ShowDepartmentLabel.Text += item.GetInfo();
+            }
+        }
+
+        private void SendDepartureButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                senders.Add(new Sender<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text)));
+            }
+            catch (DoubleException ex)
+            {
+                MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
+            }
+        }
+
+        private void AddParcelToDepartureButton_Click(object sender, EventArgs e)
+        {
+            Sender<dynamic> tmp_sender = null;
+
+            foreach (var item in senders)
+            {
+                if (item.Name == NameTextBox.Text && item.Surname == SurnameTextBox.Text && item.Patronymic == PatronymicTextBox.Text && item.Postoffice_number == postoffice_number && item.Phone_number == PhoneNumberTextBox.Text)
+                {
+                    tmp_sender = item;
+                    break;
+                }
+            }
+            
+            try
+            {
+                tmp_sender?.Parcels.Add(new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text));
+            }
+            catch (DoubleException ex)
+            {
+                MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
+            }
+        }
+
+
     }
 }

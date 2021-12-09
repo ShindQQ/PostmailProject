@@ -6,46 +6,44 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    internal class Sender : Person, ICloneable, ICountPrice
+    internal class Sender<T> : Person, ICloneable, ICountPrice
     {
-        public double Weight { get; }
-        public double Capacity { get; }
+        public List<Parcel<T>> Parcels = new List<Parcel<T>>();
 
-        public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, double weight, double capacity) : base(name, surname, patronymic, postoffice_number,phone_number)
+        public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, Parcel<T> parcel) : base(name, surname, patronymic, postoffice_number,phone_number)
         {
-            if (weight <= 0)
-            {
-                throw new DoubleException("Weight is less or equal to zero!", weight);
-            }
-            else
-            {
-                Weight = weight;
-            }
-
-            if (capacity <= 0)
-            {
-                throw new DoubleException("Capacity is less or equal to zero!", capacity);
-            }
-            else
-            {
-                Capacity = capacity;
-            }
-            
+            Parcels.Add(parcel);
         }
 
         public object Clone()
         {
-            return MemberwiseClone() as Sender;
+            return MemberwiseClone() as Sender<T>;
         }
 
         public override string GetInfo()
         {
-            return base.GetInfo() + $", Weight: {Weight}, Capacity: {Weight}"; ;
+            var parcels = from parcel in Parcels select parcel;
+            string res = base.GetInfo();
+
+            foreach (Parcel<T> parcel in parcels)
+            {
+               res += parcel.GetInfo();
+            }
+
+            return res;
         }
 
         public double CountPrice()
         {
-            return Weight * Capacity;
+            var parcels = from parcel in Parcels select parcel;
+            double res = default;
+
+            foreach (Parcel<T> parcel in parcels)
+            {
+                res += parcel.Weight * parcel.Capacity; ;
+            }
+
+            return res;
         }
     }
 }

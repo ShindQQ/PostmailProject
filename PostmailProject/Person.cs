@@ -26,7 +26,7 @@ namespace PostmailProject
             Patronymic = patronymic;
             Postoffice_number = postoffice_number;
 
-            if (Regex.IsMatch(Phone_number, pattern, RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(phone_number, pattern, RegexOptions.IgnoreCase))
             {
                 Phone_number = phone_number;
             }
