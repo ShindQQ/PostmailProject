@@ -18,7 +18,8 @@ namespace PostmailProject
 
         Parcel<dynamic> temp_parcel = null;
         Sender<dynamic> temp_sender = null;
-        List<Sender<dynamic>> senders = new List<Sender<dynamic>>();
+        HashSet<Sender<dynamic>> senders = new HashSet<Sender<dynamic>>();
+        List<Receiver<dynamic>> receivers = new List<Receiver<dynamic>>();
 
         void NotifyConsole(string message)
         {
@@ -185,7 +186,7 @@ namespace PostmailProject
             {
                 temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
                 temp_parcel.Notify += NotifyConsole;
-                temp_sender?.Parcels.Push(temp_parcel);
+                temp_sender?.Parcels.Enqueue(temp_parcel);
             }
             catch (DoubleException ex)
             {

@@ -45,7 +45,7 @@ namespace PostmailProject
         {
             Notify?.Invoke("GetInfo - Parcel");
 
-            return $"\nName: {Name}, Weight: {Weight}, Capacity: {Capacity}";
+            return $"Name: {Name}, Weight: {Weight}, Capacity: {Capacity}\n";
         }
 
         public object Clone()

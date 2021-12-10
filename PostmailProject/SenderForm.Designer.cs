@@ -109,7 +109,7 @@
             this.SenderTabs.Location = new System.Drawing.Point(115, -2);
             this.SenderTabs.Name = "SenderTabs";
             this.SenderTabs.SelectedIndex = 0;
-            this.SenderTabs.Size = new System.Drawing.Size(690, 483);
+            this.SenderTabs.Size = new System.Drawing.Size(709, 483);
             this.SenderTabs.TabIndex = 8;
             // 
             // CreateDepartmentTab
@@ -118,7 +118,7 @@
             this.CreateDepartmentTab.Location = new System.Drawing.Point(4, 29);
             this.CreateDepartmentTab.Name = "CreateDepartmentTab";
             this.CreateDepartmentTab.Padding = new System.Windows.Forms.Padding(3);
-            this.CreateDepartmentTab.Size = new System.Drawing.Size(682, 450);
+            this.CreateDepartmentTab.Size = new System.Drawing.Size(701, 450);
             this.CreateDepartmentTab.TabIndex = 0;
             this.CreateDepartmentTab.Text = "Відправлення посилки";
             this.CreateDepartmentTab.UseVisualStyleBackColor = true;
@@ -388,7 +388,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(682, 450);
+            this.tabPage2.Size = new System.Drawing.Size(701, 450);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Показ введених даних(натисніть в будь-яке місце)";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -398,14 +398,13 @@
             this.ShowDepartmentLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ShowDepartmentLabel.Location = new System.Drawing.Point(3, 3);
             this.ShowDepartmentLabel.Name = "ShowDepartmentLabel";
-            this.ShowDepartmentLabel.Size = new System.Drawing.Size(676, 444);
+            this.ShowDepartmentLabel.Size = new System.Drawing.Size(695, 444);
             this.ShowDepartmentLabel.TabIndex = 0;
             this.ShowDepartmentLabel.Click += new System.EventHandler(this.ShowDepartmentLabel_Click);
             // 
             // SenderForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.SenderTabs);

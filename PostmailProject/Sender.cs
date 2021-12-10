@@ -8,13 +8,13 @@ namespace PostmailProject
 {
     internal class Sender<T> : Person, ICloneable
     {
-        public Stack<Parcel<T>> Parcels = new Stack<Parcel<T>>();
+        public Queue<Parcel<T>> Parcels = new Queue<Parcel<T>>();
 
         public override event ConsoleDelegate Notify;
 
-        public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, Parcel<T> parcel) : base(name, surname, patronymic, postoffice_number,phone_number)
+        public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, Parcel<T> parcel) : base(name, surname, patronymic, postoffice_number, phone_number)
         {
-            Parcels.Push(parcel);
+            Parcels.Enqueue(parcel);
         }
 
         public object Clone()
@@ -28,11 +28,11 @@ namespace PostmailProject
         {
             Notify?.Invoke("GetInfo - Sender");
 
-            string res = base.GetInfo();
+            string res = base.GetInfo() + "\n";
 
             foreach (Parcel<T> parcel in Parcels)
             {
-               res += parcel.GetInfo();
+                res += parcel.GetInfo();
             }
 
             return res;

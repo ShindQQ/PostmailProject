@@ -11,6 +11,13 @@ namespace PostmailProject
         string Print(object obj);
     }
 
+    internal interface SenderReceiverInfo
+    {
+        int Postoffice_number { get; }
+        string Phone_number { get; }
+        const string pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
+    }
+
     class PersonShowNameSurname : IPrintable
     {
         string IPrintable.Print(object obj)
