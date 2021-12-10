@@ -57,6 +57,7 @@
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.ShowDepartmentLabel = new System.Windows.Forms.Label();
+            this.WriteFileButton = new System.Windows.Forms.Button();
             this.SenderTabs.SuspendLayout();
             this.CreateDepartmentTab.SuspendLayout();
             this.SendParcelBox.SuspendLayout();
@@ -402,11 +403,25 @@
             this.ShowDepartmentLabel.TabIndex = 0;
             this.ShowDepartmentLabel.Click += new System.EventHandler(this.ShowDepartmentLabel_Click);
             // 
+            // WriteFileButton
+            // 
+            this.WriteFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.WriteFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.WriteFileButton.ForeColor = System.Drawing.Color.Cyan;
+            this.WriteFileButton.Location = new System.Drawing.Point(-7, 380);
+            this.WriteFileButton.Name = "WriteFileButton";
+            this.WriteFileButton.Size = new System.Drawing.Size(122, 75);
+            this.WriteFileButton.TabIndex = 9;
+            this.WriteFileButton.Text = "Записати всі данні у файл";
+            this.WriteFileButton.UseVisualStyleBackColor = false;
+            this.WriteFileButton.Click += new System.EventHandler(this.WriteFileButton_Click);
+            // 
             // SenderForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.WriteFileButton);
             this.Controls.Add(this.SenderTabs);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -471,5 +486,6 @@
         private System.Windows.Forms.TextBox NameTextBox;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label ShowDepartmentLabel;
+        private System.Windows.Forms.Button WriteFileButton;
     }
 }

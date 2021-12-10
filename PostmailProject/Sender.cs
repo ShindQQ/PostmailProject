@@ -28,7 +28,7 @@ namespace PostmailProject
         {
             Notify?.Invoke("GetInfo - Sender");
 
-            string res = base.GetInfo() + "\n";
+            string res = "Sender: " + base.GetInfo() + "\n";
 
             foreach (Parcel<T> parcel in Parcels)
             {

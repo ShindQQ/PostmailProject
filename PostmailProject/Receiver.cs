@@ -11,19 +11,38 @@ namespace PostmailProject
         public string Name { get; }
         public string Surname { get; }
         public string Patronymic { get; }
-        public double Price { get; }
-
+        public double Price { get; set; }
+        public double Money { get; set; }
+        
         public List<Parcel<T>> Parcels = new List<Parcel<T>>();
 
         public IPrintable Printer { get; set; }
         public override event ConsoleDelegate Notify;
 
-        public Receiver(string name, string surname, string patronymic, int postoffice_number, string phone_number, double price, Parcel<T> parcel) : base(postoffice_number, phone_number)
+        public Receiver(string name, string surname, string patronymic, int postoffice_number, string phone_number, double price, double money, Parcel<T> parcel) : base(postoffice_number, phone_number)
         {
             Name = name;
             Surname = surname;
             Patronymic = patronymic;
-            Price = price;
+
+            if (price <= 0)
+            {
+                throw new DoubleException("Price is less or equal to zero!", price);
+            }
+            else
+            {
+                Price = price;
+            }
+            
+            if (money <= 0)
+            {
+                throw new DoubleException("Money is less or equal to zero!", money);
+            }
+            else
+            {
+                Money = money;
+            }
+
             Parcels.Add(parcel);
 
             Printer = null;
@@ -54,7 +73,7 @@ namespace PostmailProject
         {
             Notify?.Invoke("GetInfo - Receiver");
 
-            string res = $"Name: {Name}, Surname: {Surname}, Patronymic: {Patronymic} " + base.GetInfo() + $", Price: {Price}\n";
+            string res = "Receiver: " + $"Name: {Name}, Surname: {Surname}, Patronymic: {Patronymic} " + base.GetInfo() + $", Price: {Price}, Money: {Money}\n";
 
             foreach (Parcel<T> parcel in Parcels)
             {

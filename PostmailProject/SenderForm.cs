@@ -15,6 +15,7 @@ namespace PostmailProject
         int postoffice_number = default;
         double capacity = default;
         double weight = default;
+        double price = default;
 
         Parcel<dynamic> temp_parcel = null;
         Sender<dynamic> temp_sender = null;
@@ -150,9 +151,16 @@ namespace PostmailProject
         {
             ShowDepartmentLabel.Text = "";
 
-            foreach (var item in senders)
+            foreach (var item1 in senders)
             {
-                ShowDepartmentLabel.Text += item.GetInfo();
+                ShowDepartmentLabel.Text += item1.GetInfo();
+                foreach (var item2 in receivers)
+                {
+                    if (item1.Phone_number == item2.Phone_number && item1.Postoffice_number == item2.Postoffice_number)
+                    {
+                        ShowDepartmentLabel.Text += item2.GetInfo();
+                    }
+                }
             }
         }
 
@@ -162,7 +170,8 @@ namespace PostmailProject
             {
                 temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
                 temp_sender = new Sender<dynamic>(postoffice_number, PhoneNumberTextBox.Text, temp_parcel);
-                temp_receiver = new Receiver<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, temp_sender.CountPrice(), temp_parcel);
+                price = temp_sender.CountPrice();
+                temp_receiver = new Receiver<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, price, new Random().Next(((int)Math.Round(price) + 1) / 2, (int)Math.Round(price) * 2), temp_parcel);
 
                 temp_parcel.Notify += NotifyConsole;
                 temp_sender.Notify += NotifyConsole;
@@ -184,9 +193,9 @@ namespace PostmailProject
         private void AddParcelToDepartureButton_Click(object sender, EventArgs e)
         {
             var sender_receiver = (from send in senders
-                                  from res in receivers
-                                  where send.Postoffice_number == postoffice_number && send.Phone_number == PhoneNumberTextBox.Text
-                                  select new {Send = send, Res = res}).Take(1);
+                                  from receive in receivers
+                                  where send.Postoffice_number == postoffice_number && send.Phone_number == PhoneNumberTextBox.Text && send.Phone_number == receive.Phone_number && send.Postoffice_number == receive.Postoffice_number
+                                  select new {Send = send, Receive = receive}).Take(1);
 
             try
             {
@@ -195,7 +204,11 @@ namespace PostmailProject
                     temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
                     temp_parcel.Notify += NotifyConsole;
                     item.Send?.Parcels.Enqueue(temp_parcel);
-                    item.Res?.Parcels.Add(temp_parcel);
+                    item.Receive?.Parcels.Add(temp_parcel);
+
+                    price = weight * capacity;
+                    item.Receive.Price += price;
+                    item.Receive.Money += new Random().Next(((int)Math.Round(price) + 1) / 2, (int)Math.Round(price) * 2);
                 }
             }
             catch (DoubleException ex)
@@ -206,6 +219,11 @@ namespace PostmailProject
             {
                 MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
             }
+        }
+
+        private void WriteFileButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
