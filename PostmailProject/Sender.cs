@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    internal class Sender<T> : Person, ICloneable, ICountPrice
+    internal class Sender<T> : Person, ICloneable
     {
         public List<Parcel<T>> Parcels = new List<Parcel<T>>();
+
+        public override event ConsoleDelegate Notify;
 
         public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, Parcel<T> parcel) : base(name, surname, patronymic, postoffice_number,phone_number)
         {
@@ -17,15 +19,18 @@ namespace PostmailProject
 
         public object Clone()
         {
+            Notify?.Invoke("Clone - Sender");
+
             return MemberwiseClone() as Sender<T>;
         }
 
         public override string GetInfo()
         {
-            var parcels = from parcel in Parcels select parcel;
+            Notify?.Invoke("GetInfo - Sender");
+
             string res = base.GetInfo();
 
-            foreach (Parcel<T> parcel in parcels)
+            foreach (Parcel<T> parcel in Parcels)
             {
                res += parcel.GetInfo();
             }
@@ -35,10 +40,11 @@ namespace PostmailProject
 
         public double CountPrice()
         {
-            var parcels = from parcel in Parcels select parcel;
+            Notify?.Invoke("CountPrice - Sender");
+
             double res = default;
 
-            foreach (Parcel<T> parcel in parcels)
+            foreach (Parcel<T> parcel in Parcels)
             {
                 res += parcel.Weight * parcel.Capacity; ;
             }

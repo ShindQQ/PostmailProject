@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    internal class Parcel<T> : ICloneable
+    internal class Parcel<T> : ICloneable, IComparable
     {
         public double Weight { get; }
         public double Capacity { get; }
         public T Name { get; set; }
+
+        public delegate void ConsoleDelegate(string message);
+        public event ConsoleDelegate Notify;
 
         public Parcel(double weight, double capacity, T name)
         {
@@ -34,16 +37,32 @@ namespace PostmailProject
             }
 
             Name = name;
+
+            Notify = null;
         }
 
         public string GetInfo()
         {
+            Notify?.Invoke("GetInfo - Parcel");
+
             return $"\nName: {Name}, Weight: {Weight}, Capacity: {Capacity}";
         }
 
         public object Clone()
         {
+            Notify?.Invoke("Clone - Parcel");
+
             return MemberwiseClone() as Parcel<T>;
+        }
+
+        public int CompareTo(object obj)
+        {
+            return Name.ToString().CompareTo(((Parcel<T>)obj).Name.ToString());
+        }
+
+        public void Swap<T>(ref T arg1, ref T arg2)
+        {
+            (arg1, arg2) = (arg2, arg1);
         }
     }
 }

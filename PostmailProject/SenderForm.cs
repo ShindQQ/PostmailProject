@@ -16,7 +16,14 @@ namespace PostmailProject
         double capacity = default;
         double weight = default;
 
+        Parcel<dynamic> temp_parcel = null;
+        Sender<dynamic> temp_sender = null;
         List<Sender<dynamic>> senders = new List<Sender<dynamic>>();
+
+        void NotifyConsole(string message)
+        {
+            Console.WriteLine(message);
+        }
         
         public SenderForm()
         {
@@ -151,7 +158,11 @@ namespace PostmailProject
         {
             try
             {
-                senders.Add(new Sender<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text)));
+                temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
+                temp_sender = new Sender<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, temp_parcel);
+                temp_parcel.Notify += NotifyConsole;
+                temp_sender.Notify += NotifyConsole;
+                senders.Add(temp_sender);
             }
             catch (DoubleException ex)
             {
@@ -161,27 +172,25 @@ namespace PostmailProject
 
         private void AddParcelToDepartureButton_Click(object sender, EventArgs e)
         {
-            Sender<dynamic> tmp_sender = null;
-
             foreach (var item in senders)
             {
                 if (item.Name == NameTextBox.Text && item.Surname == SurnameTextBox.Text && item.Patronymic == PatronymicTextBox.Text && item.Postoffice_number == postoffice_number && item.Phone_number == PhoneNumberTextBox.Text)
                 {
-                    tmp_sender = item;
+                    temp_sender = item;
                     break;
                 }
             }
-            
+
             try
             {
-                tmp_sender?.Parcels.Add(new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text));
+                temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
+                temp_parcel.Notify += NotifyConsole;
+                temp_sender?.Parcels.Add(temp_parcel);
             }
             catch (DoubleException ex)
             {
                 MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
             }
         }
-
-
     }
 }

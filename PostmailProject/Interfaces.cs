@@ -11,12 +11,7 @@ namespace PostmailProject
         string Print(object obj);
     }
 
-    internal interface ICountPrice
-    {
-        double CountPrice();
-    }
-
-    class PersonShowName : IPrintable
+    class PersonShowNameSurname : IPrintable
     {
         string IPrintable.Print(object obj)
         {

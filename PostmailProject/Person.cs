@@ -18,6 +18,8 @@ namespace PostmailProject
         private string pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
 
         public IPrintable Printer { get; set; }
+        public delegate void ConsoleDelegate(string message);
+        public virtual event ConsoleDelegate Notify;
 
         protected Person(string name, string surname, string patronymic, int postoffice_number, string phone_number)
         {
@@ -36,10 +38,14 @@ namespace PostmailProject
             }
 
             Printer = null;
+
+            Notify = null;
         }
 
         public virtual string Print()
         {
+            Notify?.Invoke("Print - Person");
+
             if (Printer != null)
             {
                 return Printer.Print(this);
@@ -52,13 +58,16 @@ namespace PostmailProject
         
         public virtual string GetInfo()
         {
+            Notify?.Invoke("GetInfo - Person");
+
             return $"Name: {Name}, Surname: {Surname}, Patronymic: {Patronymic}, Phone number: {Phone_number}, Postoffice number: {Postoffice_number}"; ;
         }
 
         public int CompareTo(object obj)
         {
+            Notify?.Invoke("CompareTo - Person");
+
             return Postoffice_number.CompareTo((Person)obj);
         }
-
     }
 }
