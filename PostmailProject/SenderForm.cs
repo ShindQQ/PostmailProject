@@ -185,7 +185,7 @@ namespace PostmailProject
             {
                 temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
                 temp_parcel.Notify += NotifyConsole;
-                temp_sender?.Parcels.Add(temp_parcel);
+                temp_sender?.Parcels.Push(temp_parcel);
             }
             catch (DoubleException ex)
             {

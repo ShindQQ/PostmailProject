@@ -8,13 +8,13 @@ namespace PostmailProject
 {
     internal class Sender<T> : Person, ICloneable
     {
-        public List<Parcel<T>> Parcels = new List<Parcel<T>>();
+        public Stack<Parcel<T>> Parcels = new Stack<Parcel<T>>();
 
         public override event ConsoleDelegate Notify;
 
         public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, Parcel<T> parcel) : base(name, surname, patronymic, postoffice_number,phone_number)
         {
-            Parcels.Add(parcel);
+            Parcels.Push(parcel);
         }
 
         public object Clone()

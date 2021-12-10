@@ -60,7 +60,7 @@ namespace PostmailProject
             return Name.ToString().CompareTo(((Parcel<T>)obj).Name.ToString());
         }
 
-        public void Swap<T>(ref T arg1, ref T arg2)
+        public void Swap<Y>(ref Y arg1, ref Y arg2)
         {
             (arg1, arg2) = (arg2, arg1);
         }
