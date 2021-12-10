@@ -18,6 +18,7 @@ namespace PostmailProject
 
         Parcel<dynamic> temp_parcel = null;
         Sender<dynamic> temp_sender = null;
+        Receiver<dynamic> temp_receiver = null;
         HashSet<Sender<dynamic>> senders = new HashSet<Sender<dynamic>>();
         List<Receiver<dynamic>> receivers = new List<Receiver<dynamic>>();
 
@@ -160,12 +161,21 @@ namespace PostmailProject
             try
             {
                 temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
-                temp_sender = new Sender<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, temp_parcel);
+                temp_sender = new Sender<dynamic>(postoffice_number, PhoneNumberTextBox.Text, temp_parcel);
+                temp_receiver = new Receiver<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, temp_sender.CountPrice(), temp_parcel);
+
                 temp_parcel.Notify += NotifyConsole;
                 temp_sender.Notify += NotifyConsole;
+                temp_receiver.Notify += NotifyConsole;
+
                 senders.Add(temp_sender);
+                receivers.Add(temp_receiver);
             }
             catch (DoubleException ex)
+            {
+                MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
+            }
+            catch (IntException ex)
             {
                 MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
             }
@@ -173,22 +183,26 @@ namespace PostmailProject
 
         private void AddParcelToDepartureButton_Click(object sender, EventArgs e)
         {
-            foreach (var item in senders)
-            {
-                if (item.Name == NameTextBox.Text && item.Surname == SurnameTextBox.Text && item.Patronymic == PatronymicTextBox.Text && item.Postoffice_number == postoffice_number && item.Phone_number == PhoneNumberTextBox.Text)
-                {
-                    temp_sender = item;
-                    break;
-                }
-            }
+            var sender_receiver = (from send in senders
+                                  from res in receivers
+                                  where send.Postoffice_number == postoffice_number && send.Phone_number == PhoneNumberTextBox.Text
+                                  select new {Send = send, Res = res}).Take(1);
 
             try
             {
-                temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
-                temp_parcel.Notify += NotifyConsole;
-                temp_sender?.Parcels.Enqueue(temp_parcel);
+                foreach (var item in sender_receiver)
+                {
+                    temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
+                    temp_parcel.Notify += NotifyConsole;
+                    item.Send?.Parcels.Enqueue(temp_parcel);
+                    item.Res?.Parcels.Add(temp_parcel);
+                }
             }
             catch (DoubleException ex)
+            {
+                MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
+            }
+            catch (IntException ex)
             {
                 MessageBox.Show($"{ex.Message}, Value: {ex.Value}");
             }

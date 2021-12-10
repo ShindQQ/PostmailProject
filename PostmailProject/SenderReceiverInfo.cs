@@ -7,25 +7,18 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    abstract internal class Person : IComparable
+    abstract internal class SenderReceiverInfo : IComparable
     {
-        public string Name { get; }
-        public string Surname { get; }
-        public string Patronymic { get; }
         public int Postoffice_number { get; }
         public string Phone_number { get; }
 
         private string pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
 
-        public IPrintable Printer { get; set; }
         public delegate void ConsoleDelegate(string message);
         public virtual event ConsoleDelegate Notify;
 
-        protected Person(string name, string surname, string patronymic, int postoffice_number, string phone_number)
+        protected SenderReceiverInfo(int postoffice_number, string phone_number)
         {
-            Name = name;
-            Surname = surname;
-            Patronymic = patronymic;
             Postoffice_number = postoffice_number;
 
             if (Regex.IsMatch(phone_number, pattern, RegexOptions.IgnoreCase))
@@ -37,37 +30,21 @@ namespace PostmailProject
                 Phone_number = string.Empty;
             }
 
-            Printer = null;
-
             Notify = null;
-        }
-
-        public virtual string Print()
-        {
-            Notify?.Invoke("Print - Person");
-
-            if (Printer != null)
-            {
-                return Printer.Print(this);
-            }
-            else
-            {
-                return GetInfo();
-            }
         }
         
         public virtual string GetInfo()
         {
             Notify?.Invoke("GetInfo - Person");
 
-            return $"Name: {Name}, Surname: {Surname}, Patronymic: {Patronymic}, Phone number: {Phone_number}, Postoffice number: {Postoffice_number}"; ;
+            return $"Phone number: {Phone_number}, Postoffice number: {Postoffice_number}"; ;
         }
 
         public int CompareTo(object obj)
         {
             Notify?.Invoke("CompareTo - Person");
 
-            return Postoffice_number.CompareTo((Person)obj);
+            return Postoffice_number.CompareTo((SenderReceiverInfo)obj);
         }
     }
 }

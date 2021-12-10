@@ -11,19 +11,12 @@ namespace PostmailProject
         string Print(object obj);
     }
 
-    internal interface SenderReceiverInfo
-    {
-        int Postoffice_number { get; }
-        string Phone_number { get; }
-        const string pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
-    }
-
-    class PersonShowNameSurname : IPrintable
+    class ReceiverShowNameSurname : IPrintable
     {
         string IPrintable.Print(object obj)
         {
-            Person person  = obj as Person;
-            return $"Name: {person.Name}, Surname: {person.Surname}, Patronymic: {person.Patronymic};";
+            Receiver<dynamic> receiver  = obj as Receiver<dynamic>;
+            return $"Name: {receiver.Name}, Surname: {receiver.Surname}, Patronymic: {receiver.Patronymic};";
         }
     }
 }

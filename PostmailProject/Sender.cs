@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    internal class Sender<T> : Person, ICloneable
+    internal class Sender<T> : SenderReceiverInfo, ICloneable
     {
         public Queue<Parcel<T>> Parcels = new Queue<Parcel<T>>();
 
         public override event ConsoleDelegate Notify;
 
-        public Sender(string name, string surname, string patronymic, int postoffice_number, string phone_number, Parcel<T> parcel) : base(name, surname, patronymic, postoffice_number, phone_number)
+        public Sender(int postoffice_number, string phone_number, Parcel<T> parcel) : base(postoffice_number, phone_number)
         {
             Parcels.Enqueue(parcel);
         }
