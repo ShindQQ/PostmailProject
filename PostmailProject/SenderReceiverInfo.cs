@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
-    abstract internal class SenderReceiverInfo : IComparable
+    [Serializable]
+    internal class SenderReceiverInfo : IComparable
     {
         public int Postoffice_number { get; }
         public string Phone_number { get; }
 
+        [NonSerialized]
         private string pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
 
         public delegate void ConsoleDelegate(string message);

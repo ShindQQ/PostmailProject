@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
+    [Serializable]
     internal class Parcel<T> : ICloneable, IComparable
     {
         public double Weight { get; }

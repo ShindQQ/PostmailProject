@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
+    [Serializable]
     internal class Sender<T> : SenderReceiverInfo, ICloneable
     {
         public Queue<Parcel<T>> Parcels = new Queue<Parcel<T>>();

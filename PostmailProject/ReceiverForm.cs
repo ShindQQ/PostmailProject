@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace PostmailProject
 {
+    [Serializable]
     public partial class ReceiverForm : Form
     {
         int postoffice_number = default;

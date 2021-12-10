@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +18,10 @@ namespace PostmailProject
         double capacity = default;
         double weight = default;
         double price = default;
+
+        static string path = "file.dat";
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream write_file = new FileStream(path, FileMode.Create);
 
         Parcel<dynamic> temp_parcel = null;
         Sender<dynamic> temp_sender = null;
@@ -223,7 +229,17 @@ namespace PostmailProject
 
         private void WriteFileButton_Click(object sender, EventArgs e)
         {
-
+            foreach (var item1 in senders)
+            {
+                formatter.Serialize(write_file, item1);
+                foreach (var item2 in receivers)
+                {
+                    if (item1.Phone_number == item2.Phone_number && item1.Postoffice_number == item2.Postoffice_number)
+                    {
+                        formatter.Serialize(write_file, item2);
+                    }
+                }
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PostmailProject
 {
+    [Serializable]
     internal class Receiver<T> : SenderReceiverInfo, ICloneable
     {
         public string Name { get; }
