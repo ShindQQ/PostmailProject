@@ -18,10 +18,7 @@ namespace PostmailProject
         double capacity = default;
         double weight = default;
         double price = default;
-
-        static string path = "file.dat";
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream write_file = new FileStream(path, FileMode.Create);
+        bool check = true;
 
         Parcel<dynamic> temp_parcel = null;
         Sender<dynamic> temp_sender = null;
@@ -33,7 +30,7 @@ namespace PostmailProject
         {
             Console.WriteLine(message);
         }
-        
+
         public SenderForm()
         {
             InitializeComponent();
@@ -174,17 +171,29 @@ namespace PostmailProject
         {
             try
             {
-                temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
-                temp_sender = new Sender<dynamic>(postoffice_number, PhoneNumberTextBox.Text, temp_parcel);
-                price = temp_sender.CountPrice();
-                temp_receiver = new Receiver<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, price, new Random().Next(((int)Math.Round(price) + 1) / 2, (int)Math.Round(price) * 2), temp_parcel);
+                foreach (var item in receivers)
+                {
+                    if (item.Name == NameTextBox.Text && item.Surname == SurnameTextBox.Text && item.Patronymic == PatronymicTextBox.Text && item.Phone_number == PhoneNumberTextBox.Text && item.Postoffice_number == postoffice_number && item.Price == price)
+                    {
+                        MessageBox.Show("Such Receiver already exists! You can add him a department!");
+                        check = false;
+                    }
+                }
+                if (check == true)
+                {
+                    temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
+                    temp_sender = new Sender<dynamic>(postoffice_number, PhoneNumberTextBox.Text, temp_parcel);
+                    price = temp_sender.CountPrice();
+                    temp_receiver = new Receiver<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, price, new Random().Next(((int)Math.Round(price) + 1) / 2, (int)Math.Round(price) * 2), temp_parcel);
 
-                temp_parcel.Notify += NotifyConsole;
-                temp_sender.Notify += NotifyConsole;
-                temp_receiver.Notify += NotifyConsole;
+                    temp_parcel.Notify += NotifyConsole;
+                    temp_sender.Notify += NotifyConsole;
+                    temp_receiver.Notify += NotifyConsole;
 
-                senders.Add(temp_sender);
-                receivers.Add(temp_receiver);
+                    senders.Add(temp_sender);
+                    receivers.Add(temp_receiver);
+                }
+                check = true;
             }
             catch (DoubleException ex)
             {
@@ -199,9 +208,9 @@ namespace PostmailProject
         private void AddParcelToDepartureButton_Click(object sender, EventArgs e)
         {
             var sender_receiver = (from send in senders
-                                  from receive in receivers
-                                  where send.Postoffice_number == postoffice_number && send.Phone_number == PhoneNumberTextBox.Text && send.Phone_number == receive.Phone_number && send.Postoffice_number == receive.Postoffice_number
-                                  select new {Send = send, Receive = receive}).Take(1);
+                                   from receive in receivers
+                                   where send.Postoffice_number == postoffice_number && send.Phone_number == PhoneNumberTextBox.Text && send.Phone_number == receive.Phone_number && send.Postoffice_number == receive.Postoffice_number
+                                   select new { Send = send, Receive = receive }).Take(1);
 
             try
             {
@@ -210,7 +219,7 @@ namespace PostmailProject
                     temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
                     temp_parcel.Notify += NotifyConsole;
                     item.Send?.Parcels.Enqueue(temp_parcel);
-                    item.Receive?.Parcels.Add(temp_parcel);
+                    item.Receive?.Parcels.Enqueue(temp_parcel);
 
                     price = weight * capacity;
                     item.Receive.Price += price;
@@ -229,14 +238,39 @@ namespace PostmailProject
 
         private void WriteFileButton_Click(object sender, EventArgs e)
         {
-            foreach (var item1 in senders)
+            using (StreamWriter write_file = new StreamWriter("file.txt", false, System.Text.Encoding.Default))
             {
-                formatter.Serialize(write_file, item1);
-                foreach (var item2 in receivers)
+                foreach (var item1 in senders)
                 {
-                    if (item1.Phone_number == item2.Phone_number && item1.Postoffice_number == item2.Postoffice_number)
+                    write_file.Write(item1.Postoffice_number.ToString());
+                    write_file.WriteLine(" " + item1.Phone_number);
+
+                    foreach (var temp_parc in item1.Parcels)
                     {
-                        formatter.Serialize(write_file, item2);
+                        write_file.Write(temp_parc.Weight.ToString());
+                        write_file.Write(" " + temp_parc.Capacity.ToString());
+                        write_file.WriteLine(" " + temp_parc.Name.ToString());
+                    }
+
+                    foreach (var item2 in receivers)
+                    {
+                        if (item1.Phone_number == item2.Phone_number && item1.Postoffice_number == item2.Postoffice_number)
+                        {
+                            write_file.Write(item2.Name);
+                            write_file.Write(" " + item2.Surname);
+                            write_file.Write(" " + item2.Patronymic);
+                            write_file.Write(" " + item2.Postoffice_number.ToString());
+                            write_file.Write(" " + item2.Phone_number);
+                            write_file.Write(" " + item2.Price.ToString());
+                            write_file.WriteLine(" " + item2.Money.ToString());
+
+                            foreach (var temp_parc in item2.Parcels)
+                            {
+                                write_file.Write(temp_parc.Weight.ToString());
+                                write_file.Write(" " + temp_parc.Capacity.ToString());
+                                write_file.WriteLine(" " + temp_parc.Name.ToString());
+                            }
+                        }
                     }
                 }
             }

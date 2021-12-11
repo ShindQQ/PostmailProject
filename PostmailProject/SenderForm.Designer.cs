@@ -408,7 +408,7 @@
             this.WriteFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.WriteFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.WriteFileButton.ForeColor = System.Drawing.Color.Cyan;
-            this.WriteFileButton.Location = new System.Drawing.Point(-7, 380);
+            this.WriteFileButton.Location = new System.Drawing.Point(-7, 381);
             this.WriteFileButton.Name = "WriteFileButton";
             this.WriteFileButton.Size = new System.Drawing.Size(122, 75);
             this.WriteFileButton.TabIndex = 9;

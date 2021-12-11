@@ -34,6 +34,8 @@
             this.ReceiverTabs = new System.Windows.Forms.TabControl();
             this.ReceiveDepartmentTab = new System.Windows.Forms.TabPage();
             this.SendParcelBox = new System.Windows.Forms.GroupBox();
+            this.ReceiveDepartureBox = new System.Windows.Forms.GroupBox();
+            this.ReceiveDepartureButton = new System.Windows.Forms.Button();
             this.ReceiverBox = new System.Windows.Forms.GroupBox();
             this.PhoneNumberBox = new System.Windows.Forms.GroupBox();
             this.PhoneNumberTextBox = new System.Windows.Forms.MaskedTextBox();
@@ -47,12 +49,11 @@
             this.NameTextBox = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CheckReceivingLabel = new System.Windows.Forms.Label();
-            this.ReceiveDepartureButton = new System.Windows.Forms.Button();
-            this.ReceiveDepartureBox = new System.Windows.Forms.GroupBox();
             this.ReadFileButton = new System.Windows.Forms.Button();
             this.ReceiverTabs.SuspendLayout();
             this.ReceiveDepartmentTab.SuspendLayout();
             this.SendParcelBox.SuspendLayout();
+            this.ReceiveDepartureBox.SuspendLayout();
             this.ReceiverBox.SuspendLayout();
             this.PhoneNumberBox.SuspendLayout();
             this.PostOfficeNumberBox.SuspendLayout();
@@ -60,7 +61,6 @@
             this.SurnameBox.SuspendLayout();
             this.NameBox.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.ReceiveDepartureBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // label3
@@ -127,6 +127,29 @@
             this.SendParcelBox.TabStop = false;
             this.SendParcelBox.Text = "Отримання посилки";
             this.SendParcelBox.Enter += new System.EventHandler(this.SendParcelBox_Enter);
+            // 
+            // ReceiveDepartureBox
+            // 
+            this.ReceiveDepartureBox.BackColor = System.Drawing.Color.White;
+            this.ReceiveDepartureBox.Controls.Add(this.ReceiveDepartureButton);
+            this.ReceiveDepartureBox.Font = new System.Drawing.Font("Arial Narrow", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ReceiveDepartureBox.Location = new System.Drawing.Point(358, 47);
+            this.ReceiveDepartureBox.Name = "ReceiveDepartureBox";
+            this.ReceiveDepartureBox.Size = new System.Drawing.Size(291, 69);
+            this.ReceiveDepartureBox.TabIndex = 8;
+            this.ReceiveDepartureBox.TabStop = false;
+            this.ReceiveDepartureBox.Text = "Отримати відправлення";
+            this.ReceiveDepartureBox.Enter += new System.EventHandler(this.ReceiveDepartureBox_Enter);
+            // 
+            // ReceiveDepartureButton
+            // 
+            this.ReceiveDepartureButton.Location = new System.Drawing.Point(3, 29);
+            this.ReceiveDepartureButton.Name = "ReceiveDepartureButton";
+            this.ReceiveDepartureButton.Size = new System.Drawing.Size(278, 33);
+            this.ReceiveDepartureButton.TabIndex = 0;
+            this.ReceiveDepartureButton.Text = "Отримати всі посилки";
+            this.ReceiveDepartureButton.UseVisualStyleBackColor = true;
+            this.ReceiveDepartureButton.Click += new System.EventHandler(this.ReceiveDepartureButton_Click);
             // 
             // ReceiverBox
             // 
@@ -275,29 +298,6 @@
             this.CheckReceivingLabel.TabIndex = 0;
             this.CheckReceivingLabel.Click += new System.EventHandler(this.CheckReceivingLabel_Click);
             // 
-            // ReceiveDepartureButton
-            // 
-            this.ReceiveDepartureButton.Location = new System.Drawing.Point(3, 29);
-            this.ReceiveDepartureButton.Name = "ReceiveDepartureButton";
-            this.ReceiveDepartureButton.Size = new System.Drawing.Size(278, 33);
-            this.ReceiveDepartureButton.TabIndex = 0;
-            this.ReceiveDepartureButton.Text = "Отримати всі посилки";
-            this.ReceiveDepartureButton.UseVisualStyleBackColor = true;
-            this.ReceiveDepartureButton.Click += new System.EventHandler(this.ReceiveDepartureButton_Click);
-            // 
-            // ReceiveDepartureBox
-            // 
-            this.ReceiveDepartureBox.BackColor = System.Drawing.Color.White;
-            this.ReceiveDepartureBox.Controls.Add(this.ReceiveDepartureButton);
-            this.ReceiveDepartureBox.Font = new System.Drawing.Font("Arial Narrow", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ReceiveDepartureBox.Location = new System.Drawing.Point(358, 47);
-            this.ReceiveDepartureBox.Name = "ReceiveDepartureBox";
-            this.ReceiveDepartureBox.Size = new System.Drawing.Size(291, 69);
-            this.ReceiveDepartureBox.TabIndex = 8;
-            this.ReceiveDepartureBox.TabStop = false;
-            this.ReceiveDepartureBox.Text = "Отримати відправлення";
-            this.ReceiveDepartureBox.Enter += new System.EventHandler(this.ReceiveDepartureBox_Enter);
-            // 
             // ReadFileButton
             // 
             this.ReadFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -313,8 +313,7 @@
             // 
             // ReceiverForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.ReadFileButton);
@@ -327,6 +326,7 @@
             this.ReceiverTabs.ResumeLayout(false);
             this.ReceiveDepartmentTab.ResumeLayout(false);
             this.SendParcelBox.ResumeLayout(false);
+            this.ReceiveDepartureBox.ResumeLayout(false);
             this.ReceiverBox.ResumeLayout(false);
             this.PhoneNumberBox.ResumeLayout(false);
             this.PhoneNumberBox.PerformLayout();
@@ -339,7 +339,6 @@
             this.NameBox.ResumeLayout(false);
             this.NameBox.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.ReceiveDepartureBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

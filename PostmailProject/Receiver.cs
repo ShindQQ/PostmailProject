@@ -15,7 +15,7 @@ namespace PostmailProject
         public double Price { get; set; }
         public double Money { get; set; }
         
-        public List<Parcel<T>> Parcels = new List<Parcel<T>>();
+        public Queue<Parcel<T>> Parcels = new Queue<Parcel<T>>();
 
         public IPrintable Printer { get; set; }
         public override event ConsoleDelegate Notify;
@@ -44,7 +44,7 @@ namespace PostmailProject
                 Money = money;
             }
 
-            Parcels.Add(parcel);
+            Parcels.Enqueue(parcel);
 
             Printer = null;
         }

@@ -11,6 +11,7 @@ namespace PostmailProject
         string Print(object obj);
     }
 
+    [Serializable]
     class ReceiverShowNameSurname : IPrintable
     {
         string IPrintable.Print(object obj)
