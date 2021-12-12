@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,11 +27,10 @@ namespace PostmailProject
         HashSet<Sender<dynamic>> senders = new HashSet<Sender<dynamic>>();
         List<Receiver<dynamic>> receivers = new List<Receiver<dynamic>>();
 
-        void NotifyConsole(string message)
-        {
-            Console.WriteLine(message);
-        }
-
+        Parcel<dynamic>.ConsoleDelegate NotifyConsole1 = (string message) => Console.WriteLine(message);
+        SenderReceiverInfo.ConsoleDelegate NotifyConsole2 = (string message) => Console.WriteLine(message);
+        SortedList<Sender<dynamic>, Receiver<dynamic>> senders_receivers = new SortedList<Sender<dynamic>, Receiver<dynamic>>();
+        
         public SenderForm()
         {
             InitializeComponent();
@@ -154,16 +154,9 @@ namespace PostmailProject
         {
             ShowDepartmentLabel.Text = "";
 
-            foreach (var item1 in senders)
+            foreach(KeyValuePair<Sender<dynamic>, Receiver<dynamic>> item in senders_receivers)
             {
-                ShowDepartmentLabel.Text += item1.GetInfo();
-                foreach (var item2 in receivers)
-                {
-                    if (item1.Phone_number == item2.Phone_number && item1.Postoffice_number == item2.Postoffice_number)
-                    {
-                        ShowDepartmentLabel.Text += item2.GetInfo();
-                    }
-                }
+                ShowDepartmentLabel.Text += item.Key.GetInfo() + item.Value.GetInfo();
             }
         }
 
@@ -186,12 +179,14 @@ namespace PostmailProject
                     price = temp_sender.CountPrice();
                     temp_receiver = new Receiver<dynamic>(NameTextBox.Text, SurnameTextBox.Text, PatronymicTextBox.Text, postoffice_number, PhoneNumberTextBox.Text, price, new Random().Next(((int)Math.Round(price) + 1) / 2, (int)Math.Round(price) * 2), temp_parcel);
 
-                    temp_parcel.Notify += NotifyConsole;
-                    temp_sender.Notify += NotifyConsole;
-                    temp_receiver.Notify += NotifyConsole;
+                    temp_parcel.Notify += NotifyConsole1;
+                    temp_sender.Notify += NotifyConsole2;
+                    temp_receiver.Notify += NotifyConsole2;
 
                     senders.Add(temp_sender);
                     receivers.Add(temp_receiver);
+
+                    senders_receivers.Add(temp_sender, temp_receiver);
                 }
                 check = true;
             }
@@ -217,8 +212,8 @@ namespace PostmailProject
                 foreach (var item in sender_receiver)
                 {
                     temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
-                    temp_parcel.Notify += NotifyConsole;
-                    item.Send?.Parcels.Enqueue(temp_parcel);
+                    temp_parcel.Notify += NotifyConsole1;
+                    item.Send?.Parcels.Push(temp_parcel);
                     item.Receive?.Parcels.Enqueue(temp_parcel);
 
                     price = weight * capacity;

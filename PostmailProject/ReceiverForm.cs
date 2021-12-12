@@ -29,6 +29,7 @@ namespace PostmailProject
 
         bool sender_trash_parcel = true;
         bool receiver_trash_parcel = true;
+        bool leave = false;
 
         string file_string;
         string[] items;
@@ -38,11 +39,19 @@ namespace PostmailProject
         Receiver<dynamic> temp_receiver = null;
         Queue<Sender<dynamic>> senders = new Queue<Sender<dynamic>>();
         List<Receiver<dynamic>> receivers = new List<Receiver<dynamic>>();
+        Dictionary<Sender<dynamic>, Receiver<dynamic>> senders_receivers = new Dictionary<Sender<dynamic>, Receiver<dynamic>>();
 
-        void NotifyConsole(string message)
+
+        Parcel<dynamic>.ConsoleDelegate NotifyConsole1 = delegate (string message)
         {
             Console.WriteLine(message);
-        }
+        };
+
+        SenderReceiverInfo.ConsoleDelegate NotifyConsole2 = delegate (string message)
+        {
+            Console.WriteLine(message);
+        };
+
 
         public ReceiverForm()
         {
@@ -124,6 +133,8 @@ namespace PostmailProject
 
         private void ReceiveDepartureButton_Click(object sender, EventArgs e)
         {
+            leave = false;
+
             foreach (var item in receivers)
             {
                 if (item.Name == NameTextBox.Text && item.Surname == SurnameTextBox.Text && item.Patronymic == PatronymicTextBox.Text && item.Phone_number == PhoneNumberTextBox.Text && item.Postoffice_number == postoffice_number)
@@ -134,12 +145,28 @@ namespace PostmailProject
                         for (int i = 0; i < count; i++)
                         {
                             item.Parcels.Dequeue();
+                            if(item.Parcels.Count == 0)
+                            {
+                                receivers.Remove(item);
+                                leave = true;
+                                break;
+                            }
+                        }
+
+                        if(leave == true)
+                        {
+                            break;
                         }
                     }
                     else
                     {
                         MessageBox.Show("Receiver hasn`t enough money to take parcels!");
                     }
+                }
+                else
+                {
+                    MessageBox.Show("There isn`t such Receiver!");
+                    break;
                 }
             }
         }
@@ -150,15 +177,21 @@ namespace PostmailProject
 
             foreach (var item1 in senders)
             {
-                CheckReceivingLabel.Text += item1.GetInfo();
                 foreach (var item2 in receivers)
                 {
                     if (item1.Phone_number == item2.Phone_number && item1.Postoffice_number == item2.Postoffice_number)
                     {
-                        CheckReceivingLabel.Text += item2.GetInfo();
+                        senders_receivers.Add(item1, item2);
                     }
                 }
             }
+
+            foreach (KeyValuePair<Sender<dynamic>, Receiver<dynamic>> item in senders_receivers)
+            {
+                CheckReceivingLabel.Text += item.Key.GetInfo() + item.Value.GetInfo();
+            }
+
+            senders_receivers.Clear();
         }
 
         private void ReadFileButton_Click(object sender, EventArgs e)
@@ -178,7 +211,7 @@ namespace PostmailProject
                         phone_number = items[1];
 
                         temp_sender = new Sender<dynamic>(postoffice_number, phone_number, default);
-                        temp_sender.Notify += NotifyConsole;
+                        temp_sender.Notify += NotifyConsole2;
                         senders.Enqueue(temp_sender);
                     }
                     else if (items.Length == 3)
@@ -195,13 +228,13 @@ namespace PostmailProject
                                 {
                                     if (sender_trash_parcel == true)
                                     {
-                                        item.Parcels.Dequeue();
+                                        item.Parcels.Pop();
                                         sender_trash_parcel = false;
                                     }
 
                                     temp_parcel = new Parcel<dynamic>(weight, capacity, Tname);
-                                    temp_parcel.Notify += NotifyConsole;
-                                    item.Parcels.Enqueue(temp_parcel);
+                                    temp_parcel.Notify += NotifyConsole1;
+                                    item.Parcels.Push(temp_parcel);
                                 }
                             }
                         }
@@ -218,7 +251,7 @@ namespace PostmailProject
                                     }
 
                                     temp_parcel = new Parcel<dynamic>(weight, capacity, Tname);
-                                    temp_parcel.Notify += NotifyConsole;
+                                    temp_parcel.Notify += NotifyConsole1;
                                     item.Parcels.Enqueue(temp_parcel);
                                 }
                             }
@@ -238,7 +271,7 @@ namespace PostmailProject
                         money = double.Parse(items[6]);
 
                         temp_receiver = new Receiver<dynamic>(name, surname, patronymic, postoffice_number, phone_number, price, money, new Parcel<dynamic>(1, 1, 1));
-                        temp_receiver.Notify += NotifyConsole;
+                        temp_receiver.Notify += NotifyConsole2;
                         receivers.Add(temp_receiver);
                     }
                 }

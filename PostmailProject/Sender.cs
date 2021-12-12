@@ -9,13 +9,13 @@ namespace PostmailProject
     [Serializable]
     internal class Sender<T> : SenderReceiverInfo, ICloneable
     {
-        public Queue<Parcel<T>> Parcels = new Queue<Parcel<T>>();
+        public Stack<Parcel<T>> Parcels = new Stack<Parcel<T>>();
 
         public override event ConsoleDelegate Notify;
 
         public Sender(int postoffice_number, string phone_number, Parcel<T> parcel) : base(postoffice_number, phone_number)
         {
-            Parcels.Enqueue(parcel);
+            Parcels.Push(parcel);
         }
 
         public object Clone()

@@ -46,7 +46,7 @@ namespace PostmailProject
         {
             Notify?.Invoke("CompareTo - Person");
 
-            return Postoffice_number.CompareTo((SenderReceiverInfo)obj);
+            return Postoffice_number.CompareTo(((SenderReceiverInfo)obj).Postoffice_number);
         }
     }
 }
