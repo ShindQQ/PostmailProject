@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PostmailProject
 {
     [Serializable]
-    internal class SenderReceiverInfo : IComparable
+    abstract internal class SenderReceiverInfo : IComparable
     {
         public int Postoffice_number { get; }
         public string Phone_number { get; }
@@ -21,7 +21,14 @@ namespace PostmailProject
 
         protected SenderReceiverInfo(int postoffice_number, string phone_number)
         {
-            Postoffice_number = postoffice_number;
+            if (postoffice_number <= 0)
+            {
+                throw new DoubleException("Postoffice number is less or equal to zero!", postoffice_number);
+            }
+            else
+            {
+                Postoffice_number = postoffice_number;
+            }
 
             if (Regex.IsMatch(phone_number, pattern, RegexOptions.IgnoreCase))
             {

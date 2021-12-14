@@ -41,7 +41,6 @@ namespace PostmailProject
         List<Receiver<dynamic>> receivers = new List<Receiver<dynamic>>();
         Dictionary<Sender<dynamic>, Receiver<dynamic>> senders_receivers = new Dictionary<Sender<dynamic>, Receiver<dynamic>>();
 
-
         Parcel<dynamic>.ConsoleDelegate NotifyConsole1 = delegate (string message)
         {
             Console.WriteLine(message);
@@ -135,6 +134,11 @@ namespace PostmailProject
         {
             leave = false;
 
+            if (receivers.Count() == 0)
+            {
+                MessageBox.Show("There isn`t such Receiver!");
+            }
+
             foreach (var item in receivers)
             {
                 if (item.Name == NameTextBox.Text && item.Surname == SurnameTextBox.Text && item.Patronymic == PatronymicTextBox.Text && item.Phone_number == PhoneNumberTextBox.Text && item.Postoffice_number == postoffice_number)
@@ -153,7 +157,7 @@ namespace PostmailProject
                             }
                         }
 
-                        if(leave == true)
+                        if (leave == true)
                         {
                             break;
                         }

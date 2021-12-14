@@ -270,7 +270,7 @@
             this.SenderBox.Size = new System.Drawing.Size(337, 342);
             this.SenderBox.TabIndex = 6;
             this.SenderBox.TabStop = false;
-            this.SenderBox.Text = "Заповнення даних про відправника";
+            this.SenderBox.Text = "Заповнення даних про отримувача";
             this.SenderBox.Enter += new System.EventHandler(this.SenderBox_Enter);
             // 
             // PhoneNumberBox

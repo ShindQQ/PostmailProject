@@ -133,7 +133,7 @@
             this.ReceiveDepartureBox.BackColor = System.Drawing.Color.White;
             this.ReceiveDepartureBox.Controls.Add(this.ReceiveDepartureButton);
             this.ReceiveDepartureBox.Font = new System.Drawing.Font("Arial Narrow", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ReceiveDepartureBox.Location = new System.Drawing.Point(358, 47);
+            this.ReceiveDepartureBox.Location = new System.Drawing.Point(358, 28);
             this.ReceiveDepartureBox.Name = "ReceiveDepartureBox";
             this.ReceiveDepartureBox.Size = new System.Drawing.Size(291, 69);
             this.ReceiveDepartureBox.TabIndex = 8;

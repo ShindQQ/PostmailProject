@@ -24,12 +24,13 @@ namespace PostmailProject
         Parcel<dynamic> temp_parcel = null;
         Sender<dynamic> temp_sender = null;
         Receiver<dynamic> temp_receiver = null;
+
         HashSet<Sender<dynamic>> senders = new HashSet<Sender<dynamic>>();
         List<Receiver<dynamic>> receivers = new List<Receiver<dynamic>>();
+        SortedList<Sender<dynamic>, Receiver<dynamic>> senders_receivers = new SortedList<Sender<dynamic>, Receiver<dynamic>>();
 
         Parcel<dynamic>.ConsoleDelegate NotifyConsole1 = (string message) => Console.WriteLine(message);
         SenderReceiverInfo.ConsoleDelegate NotifyConsole2 = (string message) => Console.WriteLine(message);
-        SortedList<Sender<dynamic>, Receiver<dynamic>> senders_receivers = new SortedList<Sender<dynamic>, Receiver<dynamic>>();
         
         public SenderForm()
         {
@@ -206,6 +207,11 @@ namespace PostmailProject
                                    from receive in receivers
                                    where send.Postoffice_number == postoffice_number && send.Phone_number == PhoneNumberTextBox.Text && send.Phone_number == receive.Phone_number && send.Postoffice_number == receive.Postoffice_number
                                    select new { Send = send, Receive = receive }).Take(1);
+
+            if(sender_receiver.Count() == 0)
+            {
+                MessageBox.Show("There isn`t such Receiver!");
+            }
 
             try
             {
