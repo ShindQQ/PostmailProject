@@ -206,26 +206,23 @@ namespace PostmailProject
             var sender_receiver = (from send in senders
                                    from receive in receivers
                                    where send.Postoffice_number == postoffice_number && send.Phone_number == PhoneNumberTextBox.Text && send.Phone_number == receive.Phone_number && send.Postoffice_number == receive.Postoffice_number
-                                   select new { Send = send, Receive = receive }).Take(1);
+                                   select new { Send = send, Receive = receive }).FirstOrDefault();
 
-            if(sender_receiver.Count() == 0)
+            if (sender_receiver == null)
             {
                 MessageBox.Show("There isn`t such Receiver!");
             }
 
             try
             {
-                foreach (var item in sender_receiver)
-                {
-                    temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
-                    temp_parcel.Notify += NotifyConsole1;
-                    item.Send?.Parcels.Push(temp_parcel);
-                    item.Receive?.Parcels.Enqueue(temp_parcel);
+                temp_parcel = new Parcel<dynamic>(weight, capacity, ParcelNameTextBox.Text);
+                temp_parcel.Notify += NotifyConsole1;
+                sender_receiver.Send?.Parcels.Push(temp_parcel);
+                sender_receiver.Receive?.Parcels.Enqueue(temp_parcel);
 
-                    price = weight * capacity;
-                    item.Receive.Price += price;
-                    item.Receive.Money += new Random().Next(((int)Math.Round(price) + 1) / 2, (int)Math.Round(price) * 2);
-                }
+                price = weight * capacity;
+                sender_receiver.Receive.Price += price;
+                sender_receiver.Receive.Money += new Random().Next(((int)Math.Round(price) + 1) / 2, (int)Math.Round(price) * 2);
             }
             catch (DoubleException ex)
             {
