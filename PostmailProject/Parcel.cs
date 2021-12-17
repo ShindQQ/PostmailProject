@@ -14,6 +14,7 @@ namespace PostmailProject
         public T Name { get; set; }
 
         public delegate void ConsoleDelegate(string message);
+        [field: NonSerialized]
         public event ConsoleDelegate Notify;
 
         public Parcel(double weight, double capacity, T name)

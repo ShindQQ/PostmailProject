@@ -58,6 +58,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.ShowDepartmentLabel = new System.Windows.Forms.Label();
             this.WriteFileButton = new System.Windows.Forms.Button();
+            this.WriteBinaryFileButton = new System.Windows.Forms.Button();
             this.SenderTabs.SuspendLayout();
             this.CreateDepartmentTab.SuspendLayout();
             this.SendParcelBox.SuspendLayout();
@@ -416,11 +417,25 @@
             this.WriteFileButton.UseVisualStyleBackColor = false;
             this.WriteFileButton.Click += new System.EventHandler(this.WriteFileButton_Click);
             // 
+            // WriteBinaryFileButton
+            // 
+            this.WriteBinaryFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.WriteBinaryFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.WriteBinaryFileButton.ForeColor = System.Drawing.Color.Cyan;
+            this.WriteBinaryFileButton.Location = new System.Drawing.Point(-7, 268);
+            this.WriteBinaryFileButton.Name = "WriteBinaryFileButton";
+            this.WriteBinaryFileButton.Size = new System.Drawing.Size(122, 99);
+            this.WriteBinaryFileButton.TabIndex = 10;
+            this.WriteBinaryFileButton.Text = "Записати всі данні у бінарний файл";
+            this.WriteBinaryFileButton.UseVisualStyleBackColor = false;
+            this.WriteBinaryFileButton.Click += new System.EventHandler(this.WriteBinaryFileButton_Click);
+            // 
             // SenderForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.WriteBinaryFileButton);
             this.Controls.Add(this.WriteFileButton);
             this.Controls.Add(this.SenderTabs);
             this.Controls.Add(this.label3);
@@ -487,5 +502,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label ShowDepartmentLabel;
         private System.Windows.Forms.Button WriteFileButton;
+        private System.Windows.Forms.Button WriteBinaryFileButton;
     }
 }

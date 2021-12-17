@@ -11,6 +11,7 @@ namespace PostmailProject
     {
         public Stack<Parcel<T>> Parcels = new Stack<Parcel<T>>();
 
+        [field: NonSerialized]
         public override event ConsoleDelegate Notify;
 
         public Sender(int postoffice_number, string phone_number, Parcel<T> parcel) : base(postoffice_number, phone_number)

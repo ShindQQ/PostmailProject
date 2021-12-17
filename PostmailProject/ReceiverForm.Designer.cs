@@ -50,6 +50,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CheckReceivingLabel = new System.Windows.Forms.Label();
             this.ReadFileButton = new System.Windows.Forms.Button();
+            this.ReadBinaryFileButton = new System.Windows.Forms.Button();
             this.ReceiverTabs.SuspendLayout();
             this.ReceiveDepartmentTab.SuspendLayout();
             this.SendParcelBox.SuspendLayout();
@@ -311,11 +312,25 @@
             this.ReadFileButton.UseVisualStyleBackColor = false;
             this.ReadFileButton.Click += new System.EventHandler(this.ReadFileButton_Click);
             // 
+            // ReadBinaryFileButton
+            // 
+            this.ReadBinaryFileButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ReadBinaryFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.ReadBinaryFileButton.ForeColor = System.Drawing.Color.Lime;
+            this.ReadBinaryFileButton.Location = new System.Drawing.Point(-7, 268);
+            this.ReadBinaryFileButton.Name = "ReadBinaryFileButton";
+            this.ReadBinaryFileButton.Size = new System.Drawing.Size(122, 99);
+            this.ReadBinaryFileButton.TabIndex = 11;
+            this.ReadBinaryFileButton.Text = "Записати всі данні у бінарний файл";
+            this.ReadBinaryFileButton.UseVisualStyleBackColor = false;
+            this.ReadBinaryFileButton.Click += new System.EventHandler(this.ReadBinaryFileButton_Click);
+            // 
             // ReceiverForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ReadBinaryFileButton);
             this.Controls.Add(this.ReadFileButton);
             this.Controls.Add(this.ReceiverTabs);
             this.Controls.Add(this.label3);
@@ -367,5 +382,6 @@
         private System.Windows.Forms.GroupBox ReceiveDepartureBox;
         private System.Windows.Forms.Button ReceiveDepartureButton;
         private System.Windows.Forms.Button ReadFileButton;
+        private System.Windows.Forms.Button ReadBinaryFileButton;
     }
 }

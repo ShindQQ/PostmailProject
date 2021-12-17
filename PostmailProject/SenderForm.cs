@@ -273,5 +273,15 @@ namespace PostmailProject
                 }
             }
         }
+
+        private void WriteBinaryFileButton_Click(object sender, EventArgs e)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            using (FileStream fs = new FileStream("senders.dat", FileMode.Create))
+            {
+                formatter.Serialize(fs, senders);
+            }
+        }
     }
 }

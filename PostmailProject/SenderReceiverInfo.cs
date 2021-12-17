@@ -15,8 +15,9 @@ namespace PostmailProject
 
         [NonSerialized]
         private string pattern = "[0-9]{3}-[0-9]{3}-[0-9]{4}";
-
+        
         public delegate void ConsoleDelegate(string message);
+        [field: NonSerialized]
         public virtual event ConsoleDelegate Notify;
 
         protected SenderReceiverInfo(int postoffice_number, string phone_number)

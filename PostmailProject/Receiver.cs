@@ -17,7 +17,9 @@ namespace PostmailProject
         
         public Queue<Parcel<T>> Parcels = new Queue<Parcel<T>>();
 
+        [field: NonSerialized]
         public IPrintable Printer { get; set; }
+        [field: NonSerialized]
         public override event ConsoleDelegate Notify;
 
         public Receiver(string name, string surname, string patronymic, int postoffice_number, string phone_number, double price, double money, Parcel<T> parcel) : base(postoffice_number, phone_number)

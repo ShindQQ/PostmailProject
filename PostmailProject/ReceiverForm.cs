@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -279,6 +280,16 @@ namespace PostmailProject
                         receivers.Add(temp_receiver);
                     }
                 }
+            }
+        }
+
+        private void ReadBinaryFileButton_Click(object sender, EventArgs e)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            using (FileStream fs = new FileStream("senders.dat", FileMode.OpenOrCreate))
+            {
+                senders = (Queue<Sender<dynamic>>)formatter.Deserialize(fs);
             }
         }
     }
